@@ -69,35 +69,35 @@ export default function SignupPage() {
           />
         </div>
 
-          <FormTextField
-            name="email"
-            label="Email"
-            register={register}
-            errors={errors}
-          />
+        <FormTextField
+          name="email"
+          label="Email"
+          register={register}
+          errors={errors}
+        />
 
-          <FormTextField
-            name="mobile"
-            label="Mobile Number"
-            register={register}
-            errors={errors}
-          />
+        <FormTextField
+          name="mobile"
+          label="Mobile Number"
+          register={register}
+          errors={errors}
+        />
 
-          <FormTextField
-            name="password"
-            label="Password"
-            type="password"
-            register={register}
-            errors={errors}
-          />
+        <FormTextField
+          name="password"
+          label="Password"
+          type="password"
+          register={register}
+          errors={errors}
+        />
 
-          <FormTextField
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            register={register}
-            errors={errors}
-          />
+        <FormTextField
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          register={register}
+          errors={errors}
+        />
 
         <Button type="submit" variant="contained" fullWidth>
           Sign Up
@@ -111,9 +111,9 @@ export default function SignupPage() {
             Already have an account?
             <Link
               href="/login"
-              className="ml-1 text-[var(--color-text-primary)] hover:underline"
+              className="ml-1 text-[var(--color-primary)] hover:underline"
             >
-              Signin
+              Login
             </Link>
           </Typography>
         </div>

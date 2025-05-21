@@ -7,8 +7,7 @@ export default function RootLayout({ children }) {
       <Header />
       <div className="py-4 bg-[var(--color-surface)] h-[calc(100vh-70px)] overflow-y-auto">
       <Container
-        // maxWidth="xl"
-      >
+      className="h-full">
         {children}
       </Container>
       </div>

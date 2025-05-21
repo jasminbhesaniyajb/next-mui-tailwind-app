@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Typography, Link } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,7 @@ import FormTextField from "@/components/form-text-field";
 import { useSnackbar } from "@/context/snackbar-context";
 import { loginFormSchema } from "@/validation";
 import { decryptPassword, setLoggedInUser } from "@/utils";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -96,12 +97,11 @@ export default function LoginPage() {
         <div className="mt-6 text-center">
           <Typography
             variant="body2"
-            className="text-[var(--color-text-secondary)]"
           >
             Don’t have an account?
             <Link
               href="/signup"
-              className="ml-2 text-[var(--color-text-primary)] hover:underline"
+              className="ml-2 text-[var(--color-primary)] hover:underline"
             >
               Sign Up
             </Link>

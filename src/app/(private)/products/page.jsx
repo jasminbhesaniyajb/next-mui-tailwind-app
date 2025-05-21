@@ -27,10 +27,14 @@ export default async function Products() {
   }
 
   return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-2">
+      {products?.length > 0 ? (
+        products.map((product) => (
           <ProductCard key={product.id} product={product} />
-        ))}
+        ))
+      ) : (
+        <h3>No data found!</h3>
+      )}
     </div>
   );
 }
