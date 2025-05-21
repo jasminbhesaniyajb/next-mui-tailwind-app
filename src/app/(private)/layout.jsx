@@ -5,12 +5,13 @@ export default function RootLayout({ children }) {
   return (
     <>
       <Header />
+      <div className="py-4 bg-[var(--color-surface)] h-[calc(100vh-70px)] overflow-y-auto">
       <Container
-        maxWidth="xl"
-        className="py-4 bg-[var(--color-surface)] h-[calc(100vh-70px)] overflow-y-auto"
+        // maxWidth="xl"
       >
         {children}
       </Container>
+      </div>
     </>
   );
 }
