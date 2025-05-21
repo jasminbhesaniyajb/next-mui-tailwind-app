@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { getLoggedInUser } from "./utils";
 import { LOGIN_USER_COOKIE_KEY } from "./constant";
 
 const publicRoutes = ["/login", "/signup"];
@@ -33,7 +32,6 @@ export async function middleware(request) {
     }
   }
 
-  // Check if the user is not authenticated and trying to access private routes
   if (!currentUser && isPrivateRoute(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }

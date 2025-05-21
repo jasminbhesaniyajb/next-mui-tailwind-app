@@ -44,3 +44,14 @@ export const profileFormSchema = z.object({
     .min(10, "Mobile number must be at least 10 digits")
     .regex(/^[0-9]+$/, "Only digits allowed"),
 });
+
+export const changePasswordFormSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Current password is required"),
+    newPassword: passwordSchema,
+    confirmNewPassword: passwordSchema,
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    path: ["confirmNewPassword"],
+    message: "Passwords do not match",
+  });
