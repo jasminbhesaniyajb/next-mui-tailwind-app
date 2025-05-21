@@ -45,10 +45,6 @@ export const getLoggedInUser = () => {
   }
 };
 
-// export const clearLoggedInUser = () => {
-//   localStorage.removeItem("loggedInUser");
-// };
-
 export const clearLoggedInUser = () => {
   Cookies.remove(LOGIN_USER_COOKIE_KEY);
 };
