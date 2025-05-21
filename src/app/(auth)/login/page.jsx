@@ -4,16 +4,15 @@ import { Box, Button, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useLocalStorageUsers } from "@/hooks/useLocalStorageUsers";
+import { useStorageUsers } from "@/hooks/useStorageUsers";
 import FormTextField from "@/components/form-text-field";
 import { useSnackbar } from "@/context/snackbar-context";
 import { loginFormSchema } from "@/validation";
-import { decryptPassword } from "@/utils";
-
+import { decryptPassword, setLoggedInUser } from "@/utils";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { getUserByEmail } = useLocalStorageUsers();
+  const { getUserByEmail } = useStorageUsers();
   const { showSnackbar } = useSnackbar();
 
   const {
@@ -27,32 +26,36 @@ export default function LoginPage() {
   });
 
   const onSubmit = ({ email, password }) => {
-    const existingUser = getUserByEmail(email);
-    if (!existingUser) {
-      setError("email", {
-        type: "manual",
-        message: "Email does not exist",
-      });
-      showSnackbar("Email does not exist", "error");
-      return;
+    try {
+      const existingUser = getUserByEmail(email);
+      if (!existingUser) {
+        setError("email", {
+          type: "manual",
+          message: "Email does not exist",
+        });
+        showSnackbar("Email does not exist", "error");
+        return;
+      }
+
+      const decrypted = decryptPassword(existingUser.password);
+      console.log("decryptedPassword", decrypted, existingUser);
+
+      if (decrypted !== password) {
+        setError("password", {
+          type: "manual",
+          message: "Incorrect password",
+        });
+        showSnackbar("Incorrect password", "error");
+        return;
+      }
+
+      setLoggedInUser(existingUser);
+      showSnackbar("Login successful!", "success");
+      router.refresh();
+      router.push("/products");
+    } catch (error) {
+      console.log("error", error);
     }
-
-     const decrypted = decryptPassword(existingUser.password);
-    console.log('decryptedPassword', decrypted, existingUser);
-    
-    if (decrypted !== password) {
-      setError("password", {
-        type: "manual",
-        message: "Incorrect password",
-      });
-      showSnackbar("Incorrect password", "error");
-      return;
-    }
-
-    localStorage.setItem("loggedInUser", JSON.stringify(existingUser));
-    showSnackbar("Login successful!", "success");
-
-    router.push("/");
   };
 
   return (
@@ -86,11 +89,7 @@ export default function LoginPage() {
           errors={errors}
         />
 
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-        >
+        <Button type="submit" variant="contained" fullWidth>
           Login
         </Button>
 

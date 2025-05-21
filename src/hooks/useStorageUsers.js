@@ -1,12 +1,8 @@
 import { useCallback } from "react";
-import { STORAGE_KEY } from "@/constant";
-import { encryptPassword } from "@/utils";
+import { encryptPassword, getRegisterUser, setRegisterUser } from "@/utils";
 
-export const useLocalStorageUsers = () => {
-  const getUsers = useCallback(() => {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  }, []);
+export const useStorageUsers = () => {
+  const getUsers = useCallback(() => getRegisterUser() || [], []);
 
   const saveUser = useCallback((user) => {
     const users = getUsers();
@@ -17,13 +13,13 @@ export const useLocalStorageUsers = () => {
     };
 
     users.push(newUser);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+    setRegisterUser(users);
   }, [getUsers]);
 
   const isEmailExist = useCallback(
     (email) => {
       const users = getUsers();
-      return users.some((user) => user.email === email);
+      return users?.some((user) => user.email === email);
     },
     [getUsers]
   );

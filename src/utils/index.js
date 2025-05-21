@@ -1,6 +1,6 @@
+import { LOGIN_USER_COOKIE_KEY, REGISTER_USERS_KEY, SECRET_KEY } from "@/constant";
 import CryptoJS from "crypto-js";
-
-const SECRET_KEY = "secret-key"
+import Cookies from "js-cookie";
 
 export const encryptPassword = (password) => {
   return CryptoJS.AES.encrypt(password, SECRET_KEY).toString();
@@ -13,19 +13,42 @@ export const decryptPassword = (cipherText) => {
 
 export const setLoggedInUser = (user) => {
   if (!user) return;
-  localStorage.setItem("loggedInUser", JSON.stringify(user));
+  Cookies.set(LOGIN_USER_COOKIE_KEY, JSON.stringify(user), {
+    expires: 7,
+  });
 };
 
-export const getLoggedInUser = () => {
-  const data = localStorage.getItem("loggedInUser");
+export const setRegisterUser = (user) => {
+  if (!user) return;
+  Cookies.set(REGISTER_USERS_KEY, JSON.stringify(user), {
+    expires: 7,
+  });
+};
+
+export const getRegisterUser = () => {
+  const cookieValue = Cookies.get(REGISTER_USERS_KEY);
   try {
-    return data ? JSON.parse(data) : null;
+    return cookieValue ? JSON.parse(cookieValue) : null;
   } catch (err) {
-    console.error("Failed to parse loggedInUser from localStorage", err);
+    console.error("Failed to parse loggedInUser from cookie", err);
     return null;
   }
 };
 
+export const getLoggedInUser = () => {
+  const cookieValue = Cookies.get(LOGIN_USER_COOKIE_KEY);
+  try {
+    return cookieValue ? JSON.parse(cookieValue) : null;
+  } catch (err) {
+    console.error("Failed to parse loggedInUser from cookie", err);
+    return null;
+  }
+};
+
+// export const clearLoggedInUser = () => {
+//   localStorage.removeItem("loggedInUser");
+// };
+
 export const clearLoggedInUser = () => {
-  localStorage.removeItem("loggedInUser");
+  Cookies.remove(LOGIN_USER_COOKIE_KEY);
 };

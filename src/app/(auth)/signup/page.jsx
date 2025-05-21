@@ -2,7 +2,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocalStorageUsers } from "@/hooks/useLocalStorageUsers";
+import { useStorageUsers } from "@/hooks/useStorageUsers";
 import { signupFormSchema } from "@/validation";
 import Link from "next/link";
 import FormTextField from "@/components/form-text-field";
@@ -22,7 +22,7 @@ export default function SignupPage() {
     mode: "onChange",
   });
 
-  const { saveUser, isEmailExist } = useLocalStorageUsers();
+  const { saveUser, isEmailExist } = useStorageUsers();
 
   const onSubmit = (data) => {
     console.log("data", data);
@@ -110,7 +110,7 @@ export default function SignupPage() {
           >
             Already have an account?
             <Link
-              href="/signin"
+              href="/login"
               className="ml-1 text-[var(--color-text-primary)] hover:underline"
             >
               Signin
