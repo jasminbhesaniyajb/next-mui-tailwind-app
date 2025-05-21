@@ -31,3 +31,16 @@ export const loginFormSchema = z.object({
   email: z.string().email("Invalid email"),
   password: passwordSchema,
 });
+
+export const profileFormSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email"),
+  mobile: z
+    .string()
+    .min(10, "Mobile number must be at least 10 digits")
+    .regex(/^[0-9]+$/, "Only digits allowed"),
+});
