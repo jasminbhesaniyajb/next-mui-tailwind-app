@@ -47,7 +47,7 @@ export default async function Products({ searchParams }) {
       </div>
       {/* Pagination */}
       <Suspense fallback={<div>Loading products...</div>}>
-        <div className="mt-6 w-full flex justify-center">
+        <div className="py-6 w-full flex justify-center">
           <Pagination
             currentPage={page}
             total={pagination.total}
