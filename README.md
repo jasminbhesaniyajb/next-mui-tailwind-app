@@ -1,7 +1,9 @@
 # Project setup
-- npm i or yarn
+- npm i
 
-# Project run command
+# Project run on dev
 - npm run dev
--  or
-- yarn dev
+
+# Project run on production
+- npm run build
+- npm run start

@@ -5,9 +5,10 @@ import ProductCard from "@/components/product-card";
 import { PAGE_SIZE } from "@/constant";
 import React, { Suspense } from "react";
 
-export default async function Products({ params }) {
+export default async function Products({ searchParams }) {
+  const params = await searchParams
   const page = parseInt(params.page) || 1;
-  const limit = PAGE_SIZE;
+  const limit = parseInt(params.limit) || PAGE_SIZE;
   const skip = (page - 1) * limit;
 
   let products = [];
@@ -22,18 +23,18 @@ export default async function Products({ params }) {
       const { products: data, total } = res.data;
       products = data;
       pagination = { total, skip, limit };
-    } else {
-      console.log("res", res);
     }
   } catch (error) {
     console.log(error);
   }
 
   return (
-    <Suspense fallback={<div>Loading products...</div>}>
+    <>
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">All Products</h2>
-        <PageSizeSelector currentLimit={parseInt(params?.limit || PAGE_SIZE)} />
+        <PageSizeSelector
+          currentLimit={parseInt(params?.limit || PAGE_SIZE)}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-2">
         {products?.length > 0 ? (
@@ -45,13 +46,15 @@ export default async function Products({ params }) {
         )}
       </div>
       {/* Pagination */}
-      <div className="mt-6 w-full flex justify-center">
-        <Pagination
-          currentPage={page}
-          total={pagination.total}
-          limit={pagination.limit}
-        />
-      </div>
-    </Suspense>
+      <Suspense fallback={<div>Loading products...</div>}>
+        <div className="mt-6 w-full flex justify-center">
+          <Pagination
+            currentPage={page}
+            total={pagination.total}
+            limit={pagination.limit}
+          />
+        </div>
+      </Suspense>
+    </>
   );
 }

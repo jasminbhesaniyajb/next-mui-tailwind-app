@@ -185,7 +185,7 @@ const Header = () => {
                   <IconButton onClick={handleOpenUserMenu} className="p-0 ml-4">
                     <Avatar
                       alt="User"
-                      src="/user-avatar.png"
+                      src=""
                       className="w-10 h-10"
                     >
                       {user?.firstName?.[0]?.toUpperCase() || ""}

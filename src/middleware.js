@@ -1,13 +1,9 @@
 import { NextResponse } from "next/server";
 import { LOGIN_USER_COOKIE_KEY } from "./constant";
 
-const publicRoutes = ["/login", "/signup","/products",
-  "/products/[id]",];
+const publicRoutes = ["/login", "/signup", "/products", "/products/[id]"];
 
-const privateRoutes = [
-  "/profile",
-  "/change-password",
-];
+const privateRoutes = ["/profile", "/change-password"];
 
 const isPrivateRoute = (path) => {
   return !!privateRoutes.some((r) => path.startsWith(r));
@@ -22,7 +18,7 @@ export async function middleware(request) {
 
   if (request.nextUrl.pathname == "/") {
     // if (currentUser) {
-      return NextResponse.redirect(new URL("/products", request.url));
+    return NextResponse.redirect(new URL("/products", request.url));
     // } else {
     //   return NextResponse.redirect(new URL("/login", request.url));
     // }
@@ -32,8 +28,8 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-   if (currentUser && request.nextUrl.pathname == '/login') {
-    return NextResponse.redirect(new URL('/products', request.url))
+  if (currentUser && request.nextUrl.pathname == "/login") {
+    return NextResponse.redirect(new URL("/products", request.url));
   }
 }
 

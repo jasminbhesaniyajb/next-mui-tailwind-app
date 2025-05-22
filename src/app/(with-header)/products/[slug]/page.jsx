@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Box, Typography, Rating, Divider, Button } from "@mui/material";
 
 export default async function ProductDetailPage({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   let product;
   try {
